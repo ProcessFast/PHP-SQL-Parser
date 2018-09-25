@@ -1,14 +1,14 @@
 {
-	"name" : "greenlion/php-sql-parser",
+	"name" : "processfast/php-sql-parser",
 	"type" : "library",
-	"description" : "A pure PHP SQL (non validating) parser w/ focus on MySQL dialect of SQL",
+	"description" : "A fork of greenlion/php-sql-parser made because we were having trouble getting a production needed fix accepted and merged into their repo. A pure PHP SQL (non validating) parser w/ focus on MySQL dialect of SQL",
 	"keywords" : [
 		"sql",
 		"parser",
 		"creator",
 		"MySQL"
 	],
-	"homepage" : "https://github.com/greenlion/PHP-SQL-Parser",
+	"homepage" : "https://github.com/ProcessFast/PHP-SQL-Parser",
 	"license" : "BSD-3-Clause",
 	"authors" : [{
 			"name" : "Justin Swanhart",
@@ -23,7 +23,7 @@
 		}
 	],
 	"support" : {
-		"issues" : "https://github.com/greenlion/PHP-SQL-Parser/issues",
+		"issues" : "https://github.com/ProcessFast/PHP-SQL-Parser/issues",
 		"source" : "https://github.com/greenlion/PHP-SQL-Parser"
 	},
 	"autoload" : {
