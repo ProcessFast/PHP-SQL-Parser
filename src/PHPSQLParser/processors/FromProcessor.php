@@ -162,16 +162,16 @@ class FromProcessor extends AbstractProcessor {
             if ($skip_next && $token !== "") {
                 $parseInfo['token_count']++;
                 $skip_next = false;
-                continue;
+                continue 1;
             } else {
                 if ($skip_next) {
-                    continue;
+                    continue 1;
                 }
             }
 
             if ($this->isCommentToken($token)) {
                 $expr[] = parent::processComment($token);
-                continue;
+                continue 1;
             }
 
             switch ($upper) {
@@ -195,7 +195,7 @@ class FromProcessor extends AbstractProcessor {
                 $token_category = $upper;
                 $prevToken = $token;
                 $i++;
-                continue 2;
+                break;
 
             default:
                 if ($token_category === 'LEFT' || $token_category === 'RIGHT') {
@@ -220,7 +220,7 @@ class FromProcessor extends AbstractProcessor {
 
             if ($upper === '') {
                 $i++;
-                continue;
+                continue 1;
             }
 
             switch ($upper) {
@@ -237,14 +237,14 @@ class FromProcessor extends AbstractProcessor {
                 $parseInfo['alias']['name'] = $str;
                 $parseInfo['alias']['no_quotes'] = $this->revokeQuotation($str);
                 $parseInfo['alias']['base_expr'] = trim($parseInfo['alias']['base_expr']);
-                continue;
+                break;
 
             case 'IGNORE':
             case 'USE':
             case 'FORCE':
                 $token_category = 'IDX_HINT';
                 $parseInfo['hints'][]['hint_type'] = $upper;
-                continue 2;
+                break;
 
             case 'KEY':
             case 'INDEX':
@@ -269,12 +269,12 @@ class FromProcessor extends AbstractProcessor {
             case 'OUTER':
             case 'NATURAL':
                 $parseInfo['token_count']++;
-                continue;
+                break;
 
             case 'FOR':
                 $parseInfo['token_count']++;
                 $skip_next = true;
-                continue;
+                break;
 
             case 'STRAIGHT_JOIN':
                 $parseInfo['next_join_type'] = "STRAIGHT_JOIN";
@@ -307,7 +307,7 @@ class FromProcessor extends AbstractProcessor {
                     $token_category = '';
                     $cur_hint = (count($parseInfo['hints']) - 1);
                     $parseInfo['hints'][$cur_hint]['hint_list'] = $token;
-                    continue;
+                    break;
                 }
 
                 if ($parseInfo['token_count'] === 0) {

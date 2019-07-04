@@ -67,7 +67,7 @@ class SQLProcessor extends SQLChunkProcessor {
             // https://github.com/greenlion/PHP-SQL-Parser/issues/279
             // https://github.com/sinri/PHP-SQL-Parser/commit/eac592a0e19f1df6f420af3777a6d5504837faa7
             // as there is no pull request for 279 by the user. His solution works and tested.
-            if (!isset($tokens[$tokenNumber])) continue;// as a fix by Sinri 20180528
+            if (!isset($tokens[$tokenNumber])) continue 1;// as a fix by Sinri 20180528
             $token = $tokens[$tokenNumber];
             $trim = trim($token); // this removes also \n and \t!
 
@@ -85,14 +85,14 @@ class SQLProcessor extends SQLChunkProcessor {
                     if ($token_category !== "") { // is this correct??
                         $out[$token_category][] = $token;
                     }
-                    continue;
+                    continue 1;
                 }
                 // to skip the token we replace it with whitespace
                 $trim = "";
                 $token = "";
                 $skip_next--;
                 if ($skip_next > 0) {
-                    continue;
+                    continue 1;
                 }
             }
 
@@ -149,7 +149,7 @@ class SQLProcessor extends SQLChunkProcessor {
             case 'PLUGIN':
             // no separate section
                 if ($token_category === 'SHOW') {
-                    continue;
+                    continue 2;
                 }
                 $token_category = $upper;
                 break;
@@ -161,7 +161,7 @@ class SQLProcessor extends SQLChunkProcessor {
                 }
                 // no separate section
                 if ($token_category === 'SHOW') {
-                    continue;
+                    continue 2;
                 }
                 $token_category = $upper;
                 break;
@@ -187,10 +187,10 @@ class SQLProcessor extends SQLChunkProcessor {
             case 'DATABASE':
             case 'SCHEMA':
                 if ($prev_category === 'DROP') {
-                    continue;
+                    continue 2;
                 }
                 if ($prev_category === 'SHOW') {
-                    continue;
+                    continue 2;
                 }
                 $token_category = $upper;
                 break;
@@ -296,7 +296,7 @@ class SQLProcessor extends SQLChunkProcessor {
 
             case 'CREATE':
                 if ($prev_category === 'SHOW') {
-                    continue;
+                    continue 2;
                 }
                 $token_category = $upper;
                 break;
@@ -397,7 +397,7 @@ class SQLProcessor extends SQLChunkProcessor {
 
             case 'FOR':
                 if ($prev_category === 'SHOW') {
-                    continue;
+                    continue 2;
                 }
                 $skip_next = 1;
                 $out['OPTIONS'][] = 'FOR UPDATE'; // TODO: this could be generate problems within the position calculator
